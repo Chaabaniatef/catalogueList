@@ -1,0 +1,54 @@
+.wqmessage {
+    color: #bd0000;
+    padding: 19px;
+    border: 1px solid #dbdbdb;
+    border-radius: 5px;
+    background: #ff00000a;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.wqsubmit_message {
+  padding: 19px;
+  border: 1px solid #dbdbdb;
+  border-radius: 5px;
+  background: #e9e9e9;
+  font-size: 18px;
+  font-weight: 700;
+}
+.wqmessage:empty , .wqmessage:empty {
+  display: none;
+  }
+  .wqsubmit_message:empty {
+    display: none;
+}
+.wqtextfield {
+  width: 100%;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+.wqsubmit_button {
+  background-color: lightseagreen;
+  border: none;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 8px;
+  width: 100%;
+}
+.wqlabel {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.wqpage_heading {
+  font-size: 25px;
+  text-align: left;
+}
+
+.wqtextfield {
+  width: 100%;
+  padding: 10px!important;
+  border: 1px solid #ccc!important;
+  border-radius: 4px!important;
+}
