@@ -1,8 +1,8 @@
 <?php
-add_action('wp_ajax_wqnew_entry', 'wqnew_entry_callback_function');
-add_action('wp_ajax_nopriv_wqnew_entry', 'wqnew_entry_callback_function');
+add_action('wp_ajax_wqnew_entry', 'catalogue_wqnew_entry_callback_function');
+add_action('wp_ajax_nopriv_wqnew_entry', 'catalogue_wqnew_entry_callback_function');
 
-function wqnew_entry_callback_function() {
+function catalogue_wqnew_entry_callback_function() {
   global $wpdb;
   $wpdb->get_row( "SELECT * FROM `wp_reseller` WHERE `mail` = '".$_POST['mail']."' ORDER BY `id` DESC" );
   if($wpdb->num_rows < 1) {
@@ -28,10 +28,10 @@ function wqnew_entry_callback_function() {
 
 
 
-add_action('wp_ajax_wqedit_entry', 'wqedit_entry_callback_function');
-add_action('wp_ajax_nopriv_wqedit_entry', 'wqedit_entry_callback_function');
+add_action('wp_ajax_wqedit_entry', 'catalogue_wqedit_entry_callback_function');
+add_action('wp_ajax_nopriv_wqedit_entry', 'catalogue_wqedit_entry_callback_function');
 
-function wqedit_entry_callback_function() {
+function catalogue_wqedit_entry_callback_function() {
   global $wpdb;
   $wpdb->get_row( "SELECT * FROM `wp_reseller` WHERE `title` = '".$_POST['wqtitle']."' AND `description` = '".$_POST['wqdescription']."' AND `id`!='".$_POST['wqentryid']."' ORDER BY `id` DESC" );
   if($wpdb->num_rows < 1) {

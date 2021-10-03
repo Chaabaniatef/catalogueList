@@ -1,24 +1,24 @@
 <?php
 /*
-Plugin Name: CasaproCatalogue
-Plugin URI: https://github.com/Chaabaniatef/casaproCatalogue.git
-Description: A Plugin For WordPress reseller ( Create, Read, Update & Delete ) Application Using Ajax & WP List Table
+Plugin Name: Catalogue PDF Casapro 
+Plugin URI: https://github.com/Chaabaniatef/catalogueList
+Description: A Plugin For WordPress catalogue ( Create, Read, Update & Delete ) Application Using Ajax & WP List Table
 Author: Atef Chaabani
 Author URI: https://github.com/Chaabaniatef
 Version: 1.0.0
 */
 
 global $wpdb;
-define('RESELLER_PLUGIN_URL', plugin_dir_url( __FILE__ ));
-define('RESELLER_PLUGIN_PATH', plugin_dir_path( __FILE__ ));
+define('CATALOGUE_PLUGIN_URL', plugin_dir_url( __FILE__ ));
+define('CATALOGUE_PLUGIN_PATH', plugin_dir_path( __FILE__ ));
 
-register_activation_hook( __FILE__, 'activate_reseller_plugin_function' );
-register_deactivation_hook( __FILE__, 'deactivate_reseller_plugin_function' );
+register_activation_hook( __FILE__, 'activate_catalogue_plugin_function' );
+register_deactivation_hook( __FILE__, 'deactivate_catalogue_plugin_function' );
 
-function activate_reseller_plugin_function() {
+function activate_catalogue_plugin_function() {
   global $wpdb;
   $charset_collate = $wpdb->get_charset_collate();
-  $table_name = 'wp_reseller';
+  $table_name = 'wp_catalogue';
 
   $sql = "CREATE TABLE $table_name (
     `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -37,40 +37,40 @@ function activate_reseller_plugin_function() {
   dbDelta( $sql );
 }
 
-function deactivate_reseller_plugin_function() {
+function deactivate_catalogue_plugin_function() {
   global $wpdb;
-  $table_name = 'wp_reseller';
+  $table_name = 'wp_catalogue';
   $sql = "DROP TABLE IF EXISTS $table_name";
   $wpdb->query($sql);
 }
 
-function load_custom_css_js() {
-  wp_register_style( 'my_custom_css', RESELLER_PLUGIN_URL.'/css/style.css', false, '1.0.0' );
-  wp_enqueue_style( 'my_custom_css' );
-  wp_enqueue_script( 'my_custom_script1', RESELLER_PLUGIN_URL. '/js/custom.js' );
-  wp_enqueue_script( 'my_custom_script2', RESELLER_PLUGIN_URL. '/js/jQuery.min.js' );
-  wp_localize_script( 'my_custom_script1', 'ajax_var', array( 'ajaxurl' => admin_url('admin-ajax.php') ));
+function CatalogueLoad_custom_css_js() {
+  wp_register_style( 'Cataloguemy_custom_css', CATALOGUE_PLUGIN_URL.'/css/style.css', false, '1.0.0' );
+  wp_enqueue_style( 'Cataloguemy_custom_css' );
+  wp_enqueue_script( 'Cataloguemy_custom_script1', CATALOGUE_PLUGIN_URL. '/js/custom.js' );
+  wp_enqueue_script( 'Cataloguemy_custom_script2', CATALOGUE_PLUGIN_URL. '/js/jQuery.min.js' );
+  wp_localize_script( 'Cataloguemy_custom_script1', 'ajax_var', array( 'ajaxurl' => admin_url('admin-ajax.php') ));
 }
-add_action( 'admin_enqueue_scripts', 'load_custom_css_js' );
+add_action( 'admin_enqueue_scripts', 'CatalogueLoad_custom_css_js' );
 
-require_once(RESELLER_PLUGIN_PATH.'/ajax/ajax_action.php');
+require_once(CATALOGUE_PLUGIN_PATH.'/ajax/ajax_action.php');
 
-add_action('admin_menu', 'my_menu_pages');
-function my_menu_pages(){
-    add_menu_page('RESELLER', 'Revendeur', 'manage_options', 'new-entry', 'my_menu_output' ,'dashicons-groups',4);
-    add_submenu_page('new-entry', 'RESELLER Application', 'Nouveau', 'manage_options', 'new-entry', 'my_menu_output' );
-    add_submenu_page('new-entry', 'RESELLER Application', 'Liste revendeur', 'manage_options', 'view-entries', 'my_submenu_output' );
+add_action('admin_menu', 'CatalogueMy_menu_pages');
+function CatalogueMy_menu_pages(){
+    add_menu_page('CATALOGUE', 'Revendeur', 'manage_options', 'new-entry-catalogue', 'catalogueMy_menu_output' ,'dashicons-category',5);
+    add_submenu_page('new-entry-catalogue', 'CATALOGUE Application', 'Nouveau', 'manage_options', 'new-entry', 'catalogueMy_menu_output' );
+    add_submenu_page('new-entry-catalogue', 'CATALOGUE Application', 'Liste revendeur', 'manage_options', 'view-entries', 'catalogue_my_submenu_output' );
 }
 
-function my_menu_output() {
-  require_once(RESELLER_PLUGIN_PATH.'/admin-templates/new_entry.php');
+function catalogueMy_menu_output() {
+  require_once(CATALOGUE_PLUGIN_PATH.'/admin-templates/new_entry.php');
 }
 
 if (!class_exists('WP_List_Table')) {
     require_once(ABSPATH . 'wp-admin/includes/class-wp-list-table.php');
 }
 
-class EntryListTable extends WP_List_Table {
+class CatalogueEntryListTable extends WP_List_Table {
 
     function __construct() {
       global $status, $page;
@@ -123,7 +123,7 @@ class EntryListTable extends WP_List_Table {
 
     function process_bulk_action() {
       global $wpdb;
-      $table_name = "wp_reseller";
+      $table_name = "wp_catalogue";
         if ('delete' === $this->current_action()) {
             $ids = isset($_REQUEST['id']) ? $_REQUEST['id'] : array();
             if (is_array($ids)) $ids = implode(',', $ids);
@@ -136,7 +136,7 @@ class EntryListTable extends WP_List_Table {
     function prepare_items() {
       global $wpdb,$current_user;
 
-      $table_name = "wp_reseller";
+      $table_name = "wp_catalogue";
 		  $per_page = 10;
       $columns = $this->get_columns();
       $hidden = array();
@@ -163,9 +163,9 @@ class EntryListTable extends WP_List_Table {
     }
 }
 
-function my_submenu_output() {
+function catalogue_my_submenu_output() {
   global $wpdb;
-  $table = new EntryListTable();
+  $table = new CatalogueEntryListTable();
   $table->prepare_items();
   $message = '';
   if ('delete' === $table->current_action()) {
