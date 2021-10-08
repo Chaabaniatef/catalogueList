@@ -47,8 +47,9 @@ function deactivate_catalogue_plugin_function() {
 function CatalogueLoad_custom_css_js() {
   wp_register_style( 'Cataloguemy_custom_css', CATALOGUE_PLUGIN_URL.'/css/style.css', false, '1.0.0' );
   wp_enqueue_style( 'Cataloguemy_custom_css' );
-  wp_enqueue_script( 'Cataloguemy_custom_script1', CATALOGUE_PLUGIN_URL. '/js/custom.js' );
   wp_enqueue_script( 'Cataloguemy_custom_script2', CATALOGUE_PLUGIN_URL. '/js/jQuery.min.js' );
+  wp_enqueue_script( 'Cataloguemy_custom_script1', CATALOGUE_PLUGIN_URL. '/js/custom.js' );
+
   wp_localize_script( 'Cataloguemy_custom_script1', 'ajax_var', array( 'ajaxurl' => admin_url('admin-ajax.php') ));
 }
 add_action( 'admin_enqueue_scripts', 'CatalogueLoad_custom_css_js' );
