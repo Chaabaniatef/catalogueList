@@ -53,7 +53,7 @@ if(isset($_REQUEST['entryid']) && $_REQUEST['entryid']!='') {
 } else {
 ?>
 <div class="wrap wqmain_body">
-  <h3 class="wqpage_heading">Nouveau</h3>
+  <h3 class="wqpage_heading">Nouveau Catalogue</h3>
   <div class="wqsubmit_message"></div>
   <div>&nbsp;</div>
   <div class="wqform_body">

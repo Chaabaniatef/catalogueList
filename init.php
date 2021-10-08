@@ -57,13 +57,17 @@ require_once(CATALOGUE_PLUGIN_PATH.'/ajax/ajax_action.php');
 
 add_action('admin_menu', 'CatalogueMy_menu_pages');
 function CatalogueMy_menu_pages(){
-    add_menu_page('CATALOGUE', 'Revendeur', 'manage_options', 'new-entry-catalogue', 'catalogueMy_menu_output' ,'dashicons-category',5);
-    add_submenu_page('new-entry-catalogue', 'CATALOGUE Application', 'Nouveau', 'manage_options', 'new-entry', 'catalogueMy_menu_output' );
-    add_submenu_page('new-entry-catalogue', 'CATALOGUE Application', 'Liste revendeur', 'manage_options', 'view-entries', 'catalogue_my_submenu_output' );
+ 
+
+    add_menu_page('CATALOGUE', 'Catalogue CasaPro', 'manage_options', 'new-entry-catalogue', 'catalogueMy_menu_output' ,'dashicons-category',5);
+    add_submenu_page('new-entry-catalogue', 'CATALOGUE Application', 'Nouveau', 'manage_options', 'new-entry-catalogue', 'catalogueMy_menu_output' );
+    add_submenu_page('new-entry-catalogue', 'CATALOGUE Application', 'Liste catalogue', 'manage_options', 'view-entries-catalogue', 'catalogue_my_submenu_output' );
+
+
 }
 
 function catalogueMy_menu_output() {
-  require_once(CATALOGUE_PLUGIN_PATH.'/admin-templates/new_entry.php');
+  require_once(CATALOGUE_PLUGIN_PATH.'/admin-templates/new_entryCatalogue.php');
 }
 
 if (!class_exists('WP_List_Table')) {
@@ -174,7 +178,7 @@ function catalogue_my_submenu_output() {
   ob_start();
 ?>
   <div class="wrap wqmain_body">
-    <h3>Liste revendeur</h3>
+    <h3>Liste Catalogue</h3>
     <?php echo $message; ?>
     <form id="entry-table" method="GET">
       <input type="hidden" name="page" value="<?php echo $_REQUEST['page'] ?>"/>
