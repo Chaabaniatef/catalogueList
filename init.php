@@ -22,12 +22,11 @@ function activate_catalogue_plugin_function() {
 
   $sql = "CREATE TABLE $table_name (
     `id` bigint(11) unsigned NOT NULL AUTO_INCREMENT,
-    `resellerRS` varchar(255),
-    `name` varchar(255),
-    `surname` varchar(255),
-    `mail` varchar(255),
-    `tel` varchar(255),
-    `passCatalogue` varchar(255),
+    `titleCatalogue` varchar(255),
+    `urlPdf` varchar(255),
+    `desc` varchar(255),
+    `urlImage` varchar(255),
+    
     `created_at` varchar(255),
     `updated_at` varchar(255),
     PRIMARY KEY  (id)
@@ -191,18 +190,54 @@ function catalogue_my_submenu_output() {
   echo $wq_msg;
 }
 
-// add_shortcode( 'casaproCatalogue', 'wpcasaproCatalogue_shortcode' );
-// function wpcasaproCatalogue_shortcode() {
-//   global $wpdb;
-//   $wpdb->get_row( "SELECT * FROM `wp_reseller`" );
+add_shortcode( 'casaproCatalogue', 'wpcasaproCatalogue_shortcode' );
+function wpcasaproCatalogue_shortcode() {
+  global $wpdb;
+  $loged=false;
+  // $wpdb->get_row( "SELECT * FROM `wp_reseller`" );
 
-//   ob_start();
+  ob_start();
 
-  ?> 
-<?php //echo $wpdb->num_rows ;
- ?>
+  ?>
+  <script>
+    function setCookie(cname, cvalue, exdays) {
+  const d = new Date();
+  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  let expires = "expires="+ d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+  </script>
+  <?php 
+ if (isset($_POST["email"]) && isset($_POST["pwd"]) ){
+  $wpdb->get_row( "SELECT * FROM `wp_reseller` where mail='".$_POST["email"]."' and passCatalogue='".MD5($_POST["pwd"])."';" );
+  
+  if($wpdb->num_rows == 1) {
+    // setcookie("isLoged", "true", time() + (86400 * 30 * 30), "/"); 
+    // setcookie('isLoged', "true", time()+31556926);
+    echo "<script> setCookie('isLoged', true, 365) </script>" ;
+    $loged=true;
+  } 
+}
+ if(!isset($_COOKIE["isLoged"]) || $loged==false )
+  {
+  
+  ?>
+  
+  <form class=""  method="post">
+    <input type="text" name="email"/>
+    <input type="password" name="pwd"/>
+    <input type="submit" name="submit" value="Connexion"/>
+
+</form>
+<?php 
+  } else {
+?>
+ show list Catalogue 
+
+ 
   <?php
-
-  // return ob_get_clean();
-//}
+  echo do_shortcode( '[pdfviewer width="600px" height="849px" beta="false"]http://localhost/wordpress/wp-content/uploads/2019/06/sample.pdf[/pdfviewer]' );
+}
+  return ob_get_clean();
+}
 
